@@ -35,6 +35,11 @@
             overflow: hidden;
         }
 
+        /* اصلاح فونت برای دکمه‌ها و اینپوت‌ها */
+        button, input, textarea, select {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
         /* --- فریم اصلی --- */
         .mobile-frame {
             width: 100%;
@@ -140,18 +145,29 @@
             font-size: 2rem; font-weight: bold; color: var(--primary);
         }
 
-        .exercise-item {
+        /* استایل مشترک برای لیست تمرین‌ها و ابزارها */
+        .list-item-card {
             display: flex; align-items: center; background: white; padding: 15px;
             border-radius: 12px; margin-bottom: 15px; box-shadow: var(--shadow);
             justify-content: space-between; cursor: pointer; transition: 0.2s;
         }
-        .exercise-item:active { transform: scale(0.98); background: var(--primary-light); }
-        .ex-info h4 { margin: 0 0 5px 0; font-size: 0.95rem; }
-        .ex-info p { margin: 0; font-size: 0.8rem; color: var(--text-light); }
+        .list-item-card:active { transform: scale(0.98); background: var(--primary-light); }
+        
+        .info-col h4 { margin: 0 0 5px 0; font-size: 0.95rem; }
+        .info-col p { margin: 0; font-size: 0.8rem; color: var(--text-light); }
+        
         .progress-circle {
             width: 45px; height: 45px; border-radius: 50%; background: var(--bg);
             display: flex; justify-content: center; align-items: center;
             font-size: 0.75rem; font-weight: bold; border: 3px solid var(--primary-light);
+            flex-shrink: 0; margin-right: 10px;
+        }
+
+        .icon-circle {
+             width: 45px; height: 45px; border-radius: 50%; background: var(--primary-light);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; color: var(--primary);
+            flex-shrink: 0; margin-right: 10px;
         }
 
         .detail-list-item {
@@ -163,15 +179,6 @@
         .detail-text { font-size: 0.9rem; font-weight: 500; }
         .detail-arrow { color: #ccc; font-size: 0.8rem; }
 
-        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .tool-card {
-            background: white; border-radius: 16px; padding: 20px; text-align: center;
-            box-shadow: var(--shadow); transition: 0.2s; cursor: pointer;
-            border: 1px solid transparent; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-        }
-        .tool-card:active { transform: scale(0.95); background-color: var(--primary-light); }
-        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
         
         .menu-list { list-style: none; padding: 0; margin: 0; }
         .menu-item {
@@ -216,47 +223,28 @@
         .sub-header { display: flex; align-items: center; margin-bottom: 20px; color: var(--primary); cursor: pointer; font-weight: bold; }
 
         /* --- استایل‌های اختصاصی تمرین (Maintaining Motivation) --- */
-        .wiz-header {
-            display: flex; align-items: center; margin-bottom: 20px;
-        }
+        .wiz-header { display: flex; align-items: center; margin-bottom: 20px; }
         .wiz-close { font-size: 1.5rem; color: var(--text); cursor: pointer; }
         .wiz-title { flex: 1; text-align: center; font-weight: bold; font-size: 1.1rem; }
         
-        /* Stepper Scrollable if many steps */
-        .wiz-stepper-container {
-            overflow-x: auto; white-space: nowrap; margin-bottom: 30px;
-            padding-bottom: 10px; text-align: center;
-        }
-        .wiz-stepper {
-            display: inline-flex; gap: 10px; justify-content: center;
-        }
+        .wiz-stepper-container { overflow-x: auto; white-space: nowrap; margin-bottom: 30px; padding-bottom: 10px; text-align: center; }
+        .wiz-stepper { display: inline-flex; gap: 10px; justify-content: center; }
         .step-circle {
-            width: 30px; height: 30px; border-radius: 50%; 
-            background: #eee; color: #aaa;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; font-size: 0.8rem; flex-shrink: 0;
+            width: 30px; height: 30px; border-radius: 50%; background: #eee; color: #aaa;
+            display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 0.8rem; flex-shrink: 0;
         }
-        .step-circle.active {
-            background: var(--yellow-btn); color: var(--text);
-            box-shadow: 0 2px 10px rgba(255, 183, 77, 0.4);
-        }
-        .step-circle.checked {
-             background: #E0E0E0; color: #757575;
-        }
+        .step-circle.active { background: var(--yellow-btn); color: var(--text); box-shadow: 0 2px 10px rgba(255, 183, 77, 0.4); }
+        .step-circle.checked { background: #E0E0E0; color: #757575; }
 
-        .wiz-content { min-height: 300px; padding-bottom: 80px; } /* Added padding bottom for scroll */
+        .wiz-content { min-height: 300px; padding-bottom: 80px; }
         .wiz-question { font-weight: bold; margin-bottom: 10px; display: block; font-size: 1rem; }
         .wiz-textarea {
-            width: 100%; border: 1px solid #ddd; border-radius: 12px;
-            padding: 15px; font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem;
-            background: #fff; margin-bottom: 20px; resize: none;
+            width: 100%; border: 1px solid #ddd; border-radius: 12px; padding: 15px;
+            font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem; background: #fff; margin-bottom: 20px; resize: none;
         }
         .wiz-textarea:focus { outline: none; border-color: var(--primary); }
         
-        .char-count {
-            display: inline-block; background: #E0E0E0; padding: 5px 15px;
-            border-radius: 20px; font-size: 0.8rem; color: #666; margin-bottom: 20px;
-        }
+        .char-count { display: inline-block; background: #E0E0E0; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; color: #666; margin-bottom: 20px; }
 
         .wiz-footer {
             display: flex; justify-content: space-between; align-items: center;
@@ -266,19 +254,34 @@
         .wiz-btn-circle {
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer;
-            pointer-events: auto;
+            font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; pointer-events: auto;
         }
         .btn-next { background: var(--yellow-btn); color: var(--text); }
         .btn-prev { background: #E3F2FD; color: var(--primary); margin-right: auto; }
 
         .start-btn {
-            background: var(--dark-btn); color: white; width: 100%;
-            padding: 18px; border-radius: 30px; border: none;
-            font-size: 1.1rem; font-weight: bold; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(15, 76, 129, 0.3);
+            background: var(--dark-btn); color: white; width: 100%; padding: 18px;
+            border-radius: 30px; border: none; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(15, 76, 129, 0.3);
         }
         .r-list-item { margin-bottom: 8px; font-weight: 500; color: var(--primary); }
+        
+        /* استایل یادداشت خطی */
+        .journal-line-input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            background: transparent;
+            padding: 10px 0;
+            font-size: 1rem;
+            color: var(--text);
+            transition: 0.3s;
+            border-radius: 0;
+        }
+        .journal-line-input:focus {
+            outline: none;
+            border-bottom: 2px solid var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -340,7 +343,13 @@
             <div class="card" style="background: #FFF8F0; border:1px solid #ffe0b2;">
                 <h3>پایش هفتگی</h3>
                 <p style="font-size:0.85rem; color:#666;">زمان بررسی حال و هوای هفته رسیده. آماده‌ای؟</p>
-                <button style="width:100%; background:var(--accent); color:white; border:none; padding:10px; border-radius:8px; margin-top:10px;">شروع پایش</button>
+                <button style="width:100%; background:var(--accent); color:white; border:none; padding:10px; border-radius:8px; margin-top:10px; cursor:pointer;">شروع پایش</button>
+            </div>
+
+            <!-- یادداشت روزانه (منتقل شده به خانه) -->
+            <div style="margin-top: 30px;">
+                <p style="font-size:0.9rem; font-weight:bold; color:var(--primary); margin-bottom:5px;">یادداشت کوتاه</p>
+                <input type="text" class="journal-line-input" placeholder="امروز چه چیزی در ذهنته؟ اینجا بنویس...">
             </div>
         </div>
 
@@ -348,21 +357,27 @@
         <!-- ================= PAGE 2: EXERCISES ================= -->
         <div id="exercises" class="page">
             <h2>تمرین‌های اکت (ACT)</h2>
-            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">سه ستون اصلی برای انعطاف‌پذیری روان:</p>
+            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">ستون‌های اصلی برای انعطاف‌پذیری روان:</p>
 
-            <div class="exercise-item" onclick="navigateTo('be-present-list')">
-                <div class="ex-info"><h4>حضور در لحظه (Be Present)</h4><p>ارتباط با لحظه اکنون بدون قضاوت</p></div>
+            <div class="list-item-card" onclick="navigateTo('be-present-list')">
+                <div class="info-col"><h4>حضور در لحظه (Be Present)</h4><p>ارتباط با لحظه اکنون بدون قضاوت</p></div>
                 <div class="progress-circle">2/17</div>
             </div>
 
-            <div class="exercise-item" onclick="navigateTo('open-up-list')">
-                <div class="ex-info"><h4>گشودگی (Open Up)</h4><p>پذیرش افکار و احساسات دشوار</p></div>
+            <div class="list-item-card" onclick="navigateTo('open-up-list')">
+                <div class="info-col"><h4>گشودگی (Open Up)</h4><p>پذیرش افکار و احساسات دشوار</p></div>
                 <div class="progress-circle">0/15</div>
             </div>
 
-            <div class="exercise-item" onclick="navigateTo('do-what-matters-list')">
-                <div class="ex-info"><h4>اقدام متعهدانه (Do What Matters)</h4><p>حرکت به سمت ارزش‌های زندگی</p></div>
+            <div class="list-item-card" onclick="navigateTo('do-what-matters-list')">
+                <div class="info-col"><h4>اقدام متعهدانه (Do What Matters)</h4><p>حرکت به سمت ارزش‌های زندگی</p></div>
                 <div class="progress-circle">0/12</div>
+            </div>
+
+            <!-- آیتم جدید: شفقت -->
+            <div class="list-item-card" onclick="navigateTo('self-compassion-list')">
+                 <div class="info-col"><h4>شفقت‌ورزی (Self-Compassion)</h4><p>مهربانی با خود در سختی‌ها</p></div>
+                <div class="progress-circle">0/8</div>
             </div>
         </div>
 
@@ -406,7 +421,6 @@
 
             <div style="width: 60px; height: 60px; border: 4px solid #eee; border-top: 4px solid var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 20px;">0 / 12</div>
 
-            <!-- New Item: Maintaining Motivation (Clickable) -->
             <div class="detail-list-item" onclick="navigateTo('ex-mm-intro')">
                 <div style="display:flex; align-items:center;"><i class="fa-solid fa-fire detail-icon"></i><span class="detail-text" style="margin-right:10px;">حفظ انگیزه (Maintaining motivation)</span></div>
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
@@ -438,8 +452,22 @@
             </div>
         </div>
 
+        <!-- ================= PAGE 2-4: DETAILS (Self Compassion - NEW) ================= -->
+        <div id="self-compassion-list" class="page">
+            <div class="sub-header" onclick="navigateTo('exercises')">
+                <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
+            </div>
+            <h2 style="margin-bottom: 5px;">شفقت‌ورزی با خود</h2>
+            <p style="color:#666; font-size:0.85rem; margin-bottom:25px;">تمرین‌هایی برای مهربانی با خود در لحظات سخت.</p>
+            
+            <div style="text-align:center; padding: 40px; color:#ccc;">
+                <i class="fa-solid fa-heart-crack" style="font-size: 3rem; margin-bottom:10px;"></i>
+                <p>فعلاً آیتمی اضافه نشده است.</p>
+            </div>
+        </div>
 
-        <!-- ================= NEW: EXERCISE FLOW (Maintaining Motivation) ================= -->
+
+        <!-- ================= EXERCISE FLOW (Maintaining Motivation) ================= -->
 
         <!-- VIEW 1: Intro (Overview) -->
         <div id="ex-mm-intro" class="page">
@@ -841,26 +869,43 @@
         <!-- ================= PAGE 3: TOOLS ================= -->
         <div id="tools" class="page">
             <h2>جعبه ابزار سلامت</h2>
-            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">ابزارهای کاربردی برای لحظات حساس:</p>
+            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">ابزارهای کاربردی برای لحظات حساس و رشد:</p>
 
-            <div class="tools-grid">
-                <div class="tool-card">
-                    <span class="tool-icon" style="color: #4FC3F7;">🌬️</span><strong>تنفس دیافراگمی</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">۳ دقیقه آرام‌سازی</p>
-                </div>
-                <div class="tool-card">
-                    <span class="tool-icon" style="color: #FFB74D;">🎭</span><strong>کشف احساس</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">الان چه حسی داری؟</p>
-                </div>
-                <div class="tool-card" onclick="navigateTo('notifications')">
-                    <span class="tool-icon" style="color: #81C784;">🔔</span><strong>تنظیمات اعلان</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">لحظه‌های آگاهی</p>
-                </div>
-                <div class="tool-card" style="border-color: var(--accent);">
-                    <span class="tool-icon" style="color: var(--accent);">🆘</span><strong style="color: var(--accent);">SOS شفقت</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">کمک در بحران</p>
-                </div>
+            <!-- آیتم‌های جدید -->
+            <div class="list-item-card">
+                <div class="info-col"><h4>ماتریس اکت (ACT Matrix)</h4><p>سنجش مسیر ارزش‌ها و موانع درونی</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-table-cells"></i></div>
             </div>
-            
-            <div class="card" style="margin-top:20px;">
-                <h3>یادداشت روزانه</h3>
-                <textarea style="width:100%; border:1px solid #eee; border-radius:8px; padding:10px; font-family:inherit;" rows="4" placeholder="امروز چه چیزی ذهنت رو مشغول کرده؟..."></textarea>
+
+            <div class="list-item-card">
+                <div class="info-col"><h4>همراه هوشمند (AI)</h4><p>گفتگو با مشاور هوشمند</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-robot"></i></div>
+            </div>
+
+             <div class="list-item-card">
+                <div class="info-col"><h4>رزرو مشاوره تخصصی</h4><p>دریافت وقت مشاوره آنلاین یا حضوری</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-user-doctor"></i></div>
+            </div>
+
+            <!-- آیتم‌های قبلی به سبک جدید -->
+            <div class="list-item-card">
+                <div class="info-col"><h4>تنفس دیافراگمی</h4><p>۳ دقیقه آرام‌سازی فوری</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-wind"></i></div>
+            </div>
+
+            <div class="list-item-card">
+                <div class="info-col"><h4>کشف احساس</h4><p>برچسب‌گذاری و شناسایی احساس فعلی</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-masks-theater"></i></div>
+            </div>
+
+            <div class="list-item-card" onclick="navigateTo('notifications')">
+                 <div class="info-col"><h4>تنظیمات اعلان</h4><p>مدیریت لحظه‌های آگاهی</p></div>
+                <div class="icon-circle"><i class="fa-solid fa-bell"></i></div>
+            </div>
+
+            <div class="list-item-card" style="border: 1px solid #FFCDD2; background: #FFEBEE;">
+                <div class="info-col"><h4 style="color:#D32F2F;">SOS شفقت</h4><p style="color:#D32F2F;">کمک اضطراری در بحران</p></div>
+                <div class="icon-circle" style="background:#FFCDD2; color:#D32F2F;"><i class="fa-solid fa-kit-medical"></i></div>
             </div>
         </div>
 
@@ -869,10 +914,11 @@
         <div id="profile" class="page">
             <div style="text-align:center; margin-bottom:30px;">
                 <div style="width:80px; height:80px; background:#ddd; border-radius:50%; margin:0 auto 10px; overflow:hidden;">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nima" alt="avatar" width="100%">
+                     <!-- آواتار پسر -->
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nima&gender=male" alt="avatar" width="100%">
                 </div>
-                <h3 style="margin:0;">نیما ماجدارا</h3>
-                <span style="font-size:0.8rem; color:#888;">nima@example.com</span>
+                <h3 style="margin:0;">نیما مجدآرا</h3>
+                <span style="font-size:0.8rem; color:#888;">nima@majdara.ir</span>
             </div>
             <div class="card">
                 <ul class="menu-list">
@@ -912,7 +958,7 @@
                 <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">روز</span><span style="font-weight:bold;">پنج‌شنبه‌ها</span></div>
                 <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">ساعت</span><span style="font-weight:bold;">18:00</span></div>
             </div>
-            <button style="width:100%; background:var(--primary); color:white; padding:15px; border:none; border-radius:12px; font-size:1rem;">ذخیره تغییرات</button>
+            <button style="width:100%; background:var(--primary); color:white; padding:15px; border:none; border-radius:12px; font-size:1rem; cursor: pointer;">ذخیره تغییرات</button>
         </div>
 
     </div>
@@ -975,7 +1021,7 @@
             if (pageId === 'home') {
                 document.getElementById('btn-home').classList.add('active');
             } 
-            else if (pageId === 'exercises' || pageId === 'be-present-list' || pageId === 'open-up-list' || pageId === 'do-what-matters-list') {
+            else if (pageId === 'exercises' || pageId === 'be-present-list' || pageId === 'open-up-list' || pageId === 'do-what-matters-list' || pageId === 'self-compassion-list') {
                 document.getElementById('btn-exercises').classList.add('active');
             } 
             else if (pageId === 'tools' || pageId === 'notifications') {
@@ -991,5 +1037,5 @@
     }
 </script>
 
-</b
+</body>
 </html>

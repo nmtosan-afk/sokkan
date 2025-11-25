@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>سُکّان | هدایت‌گر سلامت روان</title>
+    <!-- آیکون تب مرورگر (Favicon) -->
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1835/1835276.png" type="image/png">
+    
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -35,7 +38,6 @@
             overflow: hidden;
         }
 
-        /* اصلاح فونت برای دکمه‌ها و اینپوت‌ها */
         button, input, textarea, select {
             font-family: 'Vazirmatn', sans-serif;
         }
@@ -145,7 +147,6 @@
             font-size: 2rem; font-weight: bold; color: var(--primary);
         }
 
-        /* استایل مشترک برای لیست تمرین‌ها و ابزارها */
         .list-item-card {
             display: flex; align-items: center; background: white; padding: 15px;
             border-radius: 12px; margin-bottom: 15px; box-shadow: var(--shadow);
@@ -179,7 +180,6 @@
         .detail-text { font-size: 0.9rem; font-weight: 500; }
         .detail-arrow { color: #ccc; font-size: 0.8rem; }
 
-        
         .menu-list { list-style: none; padding: 0; margin: 0; }
         .menu-item {
             padding: 15px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; cursor: pointer;
@@ -288,7 +288,7 @@
 
 <div class="mobile-frame">
     
-    <!-- هدر (در صفحات ویزارد مخفی می‌شود) -->
+    <!-- هدر -->
     <div class="top-bar" id="main-header">
         <div class="logo-box">
             <div class="helm-icon">
@@ -346,7 +346,7 @@
                 <button style="width:100%; background:var(--accent); color:white; border:none; padding:10px; border-radius:8px; margin-top:10px; cursor:pointer;">شروع پایش</button>
             </div>
 
-            <!-- یادداشت روزانه (منتقل شده به خانه) -->
+            <!-- یادداشت روزانه -->
             <div style="margin-top: 30px;">
                 <p style="font-size:0.9rem; font-weight:bold; color:var(--primary); margin-bottom:5px;">یادداشت کوتاه</p>
                 <input type="text" class="journal-line-input" placeholder="امروز چه چیزی در ذهنته؟ اینجا بنویس...">
@@ -374,7 +374,6 @@
                 <div class="progress-circle">0/12</div>
             </div>
 
-            <!-- آیتم جدید: شفقت -->
             <div class="list-item-card" onclick="navigateTo('self-compassion-list')">
                  <div class="info-col"><h4>شفقت‌ورزی (Self-Compassion)</h4><p>مهربانی با خود در سختی‌ها</p></div>
                 <div class="progress-circle">0/8</div>
@@ -382,13 +381,14 @@
         </div>
 
 
-        <!-- ================= PAGE 2-1: DETAILS (Be Present) ================= -->
+        <!-- ================= PAGE 2-1: DETAILS (Be Present) - COMPLETED ================= -->
         <div id="be-present-list" class="page">
             <div class="sub-header" onclick="navigateTo('exercises')">
                 <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
             </div>
             <h2 style="margin-bottom: 5px;">حضور در لحظه</h2>
             <p style="color:#666; font-size:0.85rem; margin-bottom:25px;">تمرین اتصال به لحظه حال و مشاهده افکار.</p>
+            
             <div class="detail-list-item">
                 <div style="display:flex; align-items:center;"><i class="fa-solid fa-lightbulb detail-icon"></i><span class="detail-text" style="margin-right:10px;">توجه‌آگاهی غیررسمی</span></div>
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
@@ -397,21 +397,63 @@
                 <div style="display:flex; align-items:center;"><i class="fa-solid fa-volume-high detail-icon"></i><span class="detail-text" style="margin-right:10px;">توجه‌آگاهی به تنفس</span></div>
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
             </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-eye detail-icon"></i><span class="detail-text" style="margin-right:10px;">مشاهده افکار</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-leaf detail-icon"></i><span class="detail-text" style="margin-right:10px;">برگ‌ها روی جریان آب</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-anchor detail-icon"></i><span class="detail-text" style="margin-right:10px;">لنگر انداختن (Drop Anchor)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-headphones-simple detail-icon"></i><span class="detail-text" style="margin-right:10px;">توجه به صداها</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-person-rays detail-icon"></i><span class="detail-text" style="margin-right:10px;">اسکن بدن (Body Scan)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
         </div>
 
-        <!-- ================= PAGE 2-2: DETAILS (Open Up) ================= -->
+        <!-- ================= PAGE 2-2: DETAILS (Open Up) - COMPLETED ================= -->
         <div id="open-up-list" class="page">
             <div class="sub-header" onclick="navigateTo('exercises')">
                 <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
             </div>
             <h2 style="margin-bottom: 5px;">گشودگی (Open Up)</h2>
+            <p style="color:#666; font-size:0.85rem; margin-bottom:25px;">ایجاد فضا برای احساسات ناخوشایند.</p>
+            
              <div class="detail-list-item">
-                <div style="display:flex; align-items:center;"><i class="fa-solid fa-brain detail-icon"></i><span class="detail-text" style="margin-right:10px;">گسلش از افکار (Thought defusion)</span></div>
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-brain detail-icon"></i><span class="detail-text" style="margin-right:10px;">گسلش از افکار (Defusion)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-up-right-and-down-left-from-center detail-icon"></i><span class="detail-text" style="margin-right:10px;">انبساط (Expansion)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-water detail-icon"></i><span class="detail-text" style="margin-right:10px;">موج‌سواری بر تمایلات</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-shapes detail-icon"></i><span class="detail-text" style="margin-right:10px;">جسمیت بخشیدن به احساس</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-toggle-off detail-icon"></i><span class="detail-text" style="margin-right:10px;">کلید تقلا (Struggle Switch)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-hand-holding-heart detail-icon"></i><span class="detail-text" style="margin-right:10px;">تشکر از ذهن</span></div>
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
             </div>
         </div>
 
-        <!-- ================= PAGE 2-3: DETAILS (Do What Matters) ================= -->
+        <!-- ================= PAGE 2-3: DETAILS (Do What Matters) - COMPLETED ================= -->
         <div id="do-what-matters-list" class="page">
             <div class="sub-header" onclick="navigateTo('exercises')">
                 <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
@@ -447,12 +489,16 @@
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
             </div>
              <div class="detail-list-item">
-                <div style="display:flex; align-items:center;"><i class="fa-solid fa-bullseye detail-icon"></i><span class="detail-text" style="margin-right:10px;">هدف‌گذاری</span></div>
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-bullseye detail-icon"></i><span class="detail-text" style="margin-right:10px;">هدف‌گذاری هوشمند (SMART Goals)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-list-check detail-icon"></i><span class="detail-text" style="margin-right:10px;">برنامه اقدام</span></div>
                 <i class="fa-solid fa-chevron-left detail-arrow"></i>
             </div>
         </div>
 
-        <!-- ================= PAGE 2-4: DETAILS (Self Compassion - NEW) ================= -->
+        <!-- ================= PAGE 2-4: DETAILS (Self Compassion) ================= -->
         <div id="self-compassion-list" class="page">
             <div class="sub-header" onclick="navigateTo('exercises')">
                 <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
@@ -468,8 +514,7 @@
 
 
         <!-- ================= EXERCISE FLOW (Maintaining Motivation) ================= -->
-
-        <!-- VIEW 1: Intro (Overview) -->
+        <!-- VIEW 1: Intro -->
         <div id="ex-mm-intro" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-arrow-right wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -495,7 +540,7 @@
             </div>
         </div>
 
-        <!-- VIEW 2: Step 1 (The Seven Rs) -->
+        <!-- VIEW 2: Step 1 -->
         <div id="ex-mm-step1" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -543,7 +588,7 @@
             </div>
         </div>
 
-        <!-- VIEW 3: Step 2 (Reminders) -->
+        <!-- VIEW 3: Step 2 -->
         <div id="ex-mm-step2" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -589,7 +634,7 @@
             </div>
         </div>
 
-        <!-- VIEW 4: Step 3 (Records) -->
+        <!-- VIEW 4: Step 3 -->
         <div id="ex-mm-step3" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -632,7 +677,7 @@
             </div>
         </div>
 
-        <!-- VIEW 5: Step 4 (Rewards) -->
+        <!-- VIEW 5: Step 4 -->
         <div id="ex-mm-step4" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -681,7 +726,7 @@
             </div>
         </div>
 
-        <!-- VIEW 6: Step 5 (Routines) -->
+        <!-- VIEW 6: Step 5 -->
         <div id="ex-mm-step5" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -727,7 +772,7 @@
             </div>
         </div>
 
-        <!-- VIEW 7: Step 6 (Relationships) -->
+        <!-- VIEW 7: Step 6 -->
         <div id="ex-mm-step6" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -773,7 +818,7 @@
             </div>
         </div>
 
-        <!-- VIEW 8: Step 7 (Reflecting) -->
+        <!-- VIEW 8: Step 7 -->
         <div id="ex-mm-step7" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -819,7 +864,7 @@
             </div>
         </div>
 
-        <!-- VIEW 9: Step 8 (Restructuring) -->
+        <!-- VIEW 9: Step 8 -->
         <div id="ex-mm-step8" class="page">
             <div class="wiz-header">
                 <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
@@ -871,7 +916,6 @@
             <h2>جعبه ابزار سلامت</h2>
             <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">ابزارهای کاربردی برای لحظات حساس و رشد:</p>
 
-            <!-- آیتم‌های جدید -->
             <div class="list-item-card">
                 <div class="info-col"><h4>ماتریس اکت (ACT Matrix)</h4><p>سنجش مسیر ارزش‌ها و موانع درونی</p></div>
                 <div class="icon-circle"><i class="fa-solid fa-table-cells"></i></div>
@@ -887,7 +931,6 @@
                 <div class="icon-circle"><i class="fa-solid fa-user-doctor"></i></div>
             </div>
 
-            <!-- آیتم‌های قبلی به سبک جدید -->
             <div class="list-item-card">
                 <div class="info-col"><h4>تنفس دیافراگمی</h4><p>۳ دقیقه آرام‌سازی فوری</p></div>
                 <div class="icon-circle"><i class="fa-solid fa-wind"></i></div>
@@ -915,7 +958,7 @@
             <div style="text-align:center; margin-bottom:30px;">
                 <div style="width:80px; height:80px; background:#ddd; border-radius:50%; margin:0 auto 10px; overflow:hidden;">
                      <!-- آواتار پسر -->
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nima&gender=male" alt="avatar" width="100%">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="avatar" width="100%">
                 </div>
                 <h3 style="margin:0;">نیما مجدآرا</h3>
                 <span style="font-size:0.8rem; color:#888;">nima@majdara.ir</span>

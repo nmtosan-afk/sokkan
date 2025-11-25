@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>سُکّان | هدایت‌گر سلامت روان</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- متغیرها --- */
+        :root {
+            --primary: #0F4C81;
+            --primary-light: #E8F1F5;
+            --accent: #FF6F61;
+            --bg: #F8F9FA;
+            --text: #2D3436;
+            --text-light: #636e72;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 20px rgba(0,0,0,0.06);
+            --yellow-btn: #FFB74D;
+            --dark-btn: #0F3057;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #eef2f3;
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- فریم اصلی --- */
+        .mobile-frame {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg);
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* --- هدر --- */
+        .top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            padding: 0 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo-box { display: flex; align-items: center; gap: 12px; }
+        .helm-icon {
+            width: 40px; height: 40px;
+            border: 3px solid var(--primary); border-radius: 50%;
+            position: relative; display: flex; justify-content: center; align-items: center;
+            animation: spinIntro 1.5s ease-out;
+        }
+        @keyframes spinIntro { from { transform: rotate(-180deg); opacity: 0; } to { transform: rotate(0); opacity: 1; } }
+        .helm-spoke { position: absolute; background: var(--primary); border-radius: 2px; }
+        .s1 { width: 100%; height: 3px; } .s2 { width: 3px; height: 100%; }
+        .s3 { width: 70%; height: 3px; transform: rotate(45deg); } .s4 { width: 70%; height: 3px; transform: rotate(-45deg); }
+        .helm-center {
+            width: 10px; height: 10px; background: var(--card-bg);
+            border: 2px solid var(--primary); border-radius: 50%;
+            position: absolute; z-index: 2;
+        }
+        .logo-text { font-weight: 900; font-size: 1.3rem; color: var(--primary); letter-spacing: -0.5px; }
+        
+        .notification-bell { position: relative; font-size: 1.2rem; color: var(--text-light); cursor: pointer; }
+        .badge { position: absolute; top: -3px; right: -3px; background: var(--accent); width: 9px; height: 9px; border-radius: 50%; }
+
+        /* --- ناحیه محتوا --- */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            margin-top: 70px;
+            padding: 20px;
+            padding-bottom: 100px;
+            scroll-behavior: smooth;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+        .page.active { display: block !important; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { margin-top: 0; font-size: 1.3rem; color: var(--text); }
+        h3 { font-size: 1rem; margin-bottom: 10px; }
+        
+        .card {
+            background: var(--card-bg); border-radius: 16px; padding: 20px;
+            margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid #eee;
+        }
+
+        .stats-row { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .stat-item { text-align: center; flex: 1; }
+        .stat-icon {
+            background: var(--primary-light); color: var(--primary);
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; margin: 0 auto 8px;
+        }
+        .stat-val { font-weight: bold; display: block; }
+        .stat-label { font-size: 0.75rem; color: var(--text-light); }
+
+        .actometer-gauge {
+            position: relative; height: 100px; width: 200px; margin: 20px auto; overflow: hidden;
+            background: conic-gradient(from 270deg at 50% 100%, #ddd 0deg, #ddd 180deg);
+            border-radius: 100px 100px 0 0;
+        }
+        .gauge-fill {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: conic-gradient(from 270deg at 50% 100%, var(--primary) 0deg, var(--primary) 45deg, transparent 45deg);
+            border-radius: 100px 100px 0 0; transition: 1s ease;
+        }
+        .gauge-center {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            font-size: 2rem; font-weight: bold; color: var(--primary);
+        }
+
+        .exercise-item {
+            display: flex; align-items: center; background: white; padding: 15px;
+            border-radius: 12px; margin-bottom: 15px; box-shadow: var(--shadow);
+            justify-content: space-between; cursor: pointer; transition: 0.2s;
+        }
+        .exercise-item:active { transform: scale(0.98); background: var(--primary-light); }
+        .ex-info h4 { margin: 0 0 5px 0; font-size: 0.95rem; }
+        .ex-info p { margin: 0; font-size: 0.8rem; color: var(--text-light); }
+        .progress-circle {
+            width: 45px; height: 45px; border-radius: 50%; background: var(--bg);
+            display: flex; justify-content: center; align-items: center;
+            font-size: 0.75rem; font-weight: bold; border: 3px solid var(--primary-light);
+        }
+
+        .detail-list-item {
+            display: flex; align-items: center; background: white; padding: 18px;
+            border-radius: 12px; margin-bottom: 12px; border: 1px solid #f0f0f0;
+            justify-content: space-between; cursor: pointer;
+        }
+        .detail-icon { color: #FBC02D; font-size: 1.2rem; margin-left: 15px; }
+        .detail-text { font-size: 0.9rem; font-weight: 500; }
+        .detail-arrow { color: #ccc; font-size: 0.8rem; }
+
+        .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .tool-card {
+            background: white; border-radius: 16px; padding: 20px; text-align: center;
+            box-shadow: var(--shadow); transition: 0.2s; cursor: pointer;
+            border: 1px solid transparent; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+        .tool-card:active { transform: scale(0.95); background-color: var(--primary-light); }
+        .tool-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+        
+        .menu-list { list-style: none; padding: 0; margin: 0; }
+        .menu-item {
+            padding: 15px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; cursor: pointer;
+        }
+        .menu-item:last-child { border-bottom: none; }
+
+        /* --- نویگیشن پایین --- */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 10px 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 1000;
+        }
+        .nav-item { text-align: center; color: #aaa; font-size: 0.8rem; cursor: pointer; flex: 1; }
+        .nav-item i { display: block; font-size: 1.4rem; margin-bottom: 5px; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-5px); }
+
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--primary); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        .sub-header { display: flex; align-items: center; margin-bottom: 20px; color: var(--primary); cursor: pointer; font-weight: bold; }
+
+        /* --- استایل‌های اختصاصی تمرین (Maintaining Motivation) --- */
+        .wiz-header {
+            display: flex; align-items: center; margin-bottom: 20px;
+        }
+        .wiz-close { font-size: 1.5rem; color: var(--text); cursor: pointer; }
+        .wiz-title { flex: 1; text-align: center; font-weight: bold; font-size: 1.1rem; }
+        
+        /* Stepper Scrollable if many steps */
+        .wiz-stepper-container {
+            overflow-x: auto; white-space: nowrap; margin-bottom: 30px;
+            padding-bottom: 10px; text-align: center;
+        }
+        .wiz-stepper {
+            display: inline-flex; gap: 10px; justify-content: center;
+        }
+        .step-circle {
+            width: 30px; height: 30px; border-radius: 50%; 
+            background: #eee; color: #aaa;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 0.8rem; flex-shrink: 0;
+        }
+        .step-circle.active {
+            background: var(--yellow-btn); color: var(--text);
+            box-shadow: 0 2px 10px rgba(255, 183, 77, 0.4);
+        }
+        .step-circle.checked {
+             background: #E0E0E0; color: #757575;
+        }
+
+        .wiz-content { min-height: 300px; padding-bottom: 80px; } /* Added padding bottom for scroll */
+        .wiz-question { font-weight: bold; margin-bottom: 10px; display: block; font-size: 1rem; }
+        .wiz-textarea {
+            width: 100%; border: 1px solid #ddd; border-radius: 12px;
+            padding: 15px; font-family: 'Vazirmatn', sans-serif; font-size: 0.95rem;
+            background: #fff; margin-bottom: 20px; resize: none;
+        }
+        .wiz-textarea:focus { outline: none; border-color: var(--primary); }
+        
+        .char-count {
+            display: inline-block; background: #E0E0E0; padding: 5px 15px;
+            border-radius: 20px; font-size: 0.8rem; color: #666; margin-bottom: 20px;
+        }
+
+        .wiz-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 2000;
+            max-width: 380px; margin: 0 auto; pointer-events: none;
+        }
+        .wiz-btn-circle {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer;
+            pointer-events: auto;
+        }
+        .btn-next { background: var(--yellow-btn); color: var(--text); }
+        .btn-prev { background: #E3F2FD; color: var(--primary); margin-right: auto; }
+
+        .start-btn {
+            background: var(--dark-btn); color: white; width: 100%;
+            padding: 18px; border-radius: 30px; border: none;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(15, 76, 129, 0.3);
+        }
+        .r-list-item { margin-bottom: 8px; font-weight: 500; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="mobile-frame">
+    
+    <!-- هدر (در صفحات ویزارد مخفی می‌شود) -->
+    <div class="top-bar" id="main-header">
+        <div class="logo-box">
+            <div class="helm-icon">
+                <div class="helm-spoke s1"></div>
+                <div class="helm-spoke s2"></div>
+                <div class="helm-spoke s3"></div>
+                <div class="helm-spoke s4"></div>
+                <div class="helm-center"></div>
+            </div>
+            <span class="logo-text">سُکّان</span>
+        </div>
+        <div class="notification-bell" onclick="navigateTo('notifications')">
+            <i class="fa-regular fa-bell"></i>
+            <div class="badge"></div>
+        </div>
+    </div>
+
+    <!-- ناحیه محتوا -->
+    <div class="content-area">
+        
+        <!-- ================= PAGE 1: HOME ================= -->
+        <div id="home" class="page active">
+            <h2>سلام نیما، صبحت بخیر ☀️</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 25px;">امروز سکان زندگی رو چطور به دست می‌گیری؟</p>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <span class="stat-val">4 از 12</span><span class="stat-label">تمرین‌ها</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa-solid fa-headphones"></i></div>
+                    <span class="stat-val">15 دقیقه</span><span class="stat-label">شنیداری</span>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa-solid fa-chart-pie"></i></div>
+                    <span class="stat-val">60%</span><span class="stat-label">اکتومتر</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display:flex; justify-content:space-between;">
+                    <h3>وضعیت اکتومتر امروز</h3><span style="color:var(--primary); font-size:0.8rem;">جزئیات ></span>
+                </div>
+                <div class="actometer-gauge">
+                    <div class="gauge-fill" style="background: conic-gradient(from 270deg at 50% 100%, var(--primary) 0deg, var(--primary) 110deg, transparent 110deg);"></div>
+                    <div class="gauge-center">60</div>
+                </div>
+                <p style="text-align:center; font-size:0.85rem; color:#888;">امروز بیشتر در حال انجام کارهای ارزشمند بودی.</p>
+            </div>
+
+            <div class="card" style="background: #FFF8F0; border:1px solid #ffe0b2;">
+                <h3>پایش هفتگی</h3>
+                <p style="font-size:0.85rem; color:#666;">زمان بررسی حال و هوای هفته رسیده. آماده‌ای؟</p>
+                <button style="width:100%; background:var(--accent); color:white; border:none; padding:10px; border-radius:8px; margin-top:10px;">شروع پایش</button>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 2: EXERCISES ================= -->
+        <div id="exercises" class="page">
+            <h2>تمرین‌های اکت (ACT)</h2>
+            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">سه ستون اصلی برای انعطاف‌پذیری روان:</p>
+
+            <div class="exercise-item" onclick="navigateTo('be-present-list')">
+                <div class="ex-info"><h4>حضور در لحظه (Be Present)</h4><p>ارتباط با لحظه اکنون بدون قضاوت</p></div>
+                <div class="progress-circle">2/17</div>
+            </div>
+
+            <div class="exercise-item" onclick="navigateTo('open-up-list')">
+                <div class="ex-info"><h4>گشودگی (Open Up)</h4><p>پذیرش افکار و احساسات دشوار</p></div>
+                <div class="progress-circle">0/15</div>
+            </div>
+
+            <div class="exercise-item" onclick="navigateTo('do-what-matters-list')">
+                <div class="ex-info"><h4>اقدام متعهدانه (Do What Matters)</h4><p>حرکت به سمت ارزش‌های زندگی</p></div>
+                <div class="progress-circle">0/12</div>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 2-1: DETAILS (Be Present) ================= -->
+        <div id="be-present-list" class="page">
+            <div class="sub-header" onclick="navigateTo('exercises')">
+                <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
+            </div>
+            <h2 style="margin-bottom: 5px;">حضور در لحظه</h2>
+            <p style="color:#666; font-size:0.85rem; margin-bottom:25px;">تمرین اتصال به لحظه حال و مشاهده افکار.</p>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-lightbulb detail-icon"></i><span class="detail-text" style="margin-right:10px;">توجه‌آگاهی غیررسمی</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-volume-high detail-icon"></i><span class="detail-text" style="margin-right:10px;">توجه‌آگاهی به تنفس</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 2-2: DETAILS (Open Up) ================= -->
+        <div id="open-up-list" class="page">
+            <div class="sub-header" onclick="navigateTo('exercises')">
+                <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
+            </div>
+            <h2 style="margin-bottom: 5px;">گشودگی (Open Up)</h2>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-brain detail-icon"></i><span class="detail-text" style="margin-right:10px;">گسلش از افکار (Thought defusion)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 2-3: DETAILS (Do What Matters) ================= -->
+        <div id="do-what-matters-list" class="page">
+            <div class="sub-header" onclick="navigateTo('exercises')">
+                <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به تمرین‌ها
+            </div>
+            <h2 style="margin-bottom: 5px;">اقدام متعهدانه</h2>
+            <p style="color:#666; font-size:0.85rem; margin-bottom:25px;">ارزش‌های اصلی خود را شفاف کنید و در جهت اهداف معنادار اقدام کنید.</p>
+
+            <div style="width: 60px; height: 60px; border: 4px solid #eee; border-top: 4px solid var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: 0 auto 20px;">0 / 12</div>
+
+            <!-- New Item: Maintaining Motivation (Clickable) -->
+            <div class="detail-list-item" onclick="navigateTo('ex-mm-intro')">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-fire detail-icon"></i><span class="detail-text" style="margin-right:10px;">حفظ انگیزه (Maintaining motivation)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-mountain detail-icon"></i><span class="detail-text" style="margin-right:10px;">غلبه بر موانع</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-code-branch detail-icon"></i><span class="detail-text" style="margin-right:10px;">نقطه انتخاب (Choice point)</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-bullhorn detail-icon"></i><span class="detail-text" style="margin-right:10px;">بیان قاطعانه</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+            <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-magnifying-glass detail-icon"></i><span class="detail-text" style="margin-right:10px;">کشف ارزش‌ها</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-compass detail-icon"></i><span class="detail-text" style="margin-right:10px;">مسیر ارزشمند</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+             <div class="detail-list-item">
+                <div style="display:flex; align-items:center;"><i class="fa-solid fa-bullseye detail-icon"></i><span class="detail-text" style="margin-right:10px;">هدف‌گذاری</span></div>
+                <i class="fa-solid fa-chevron-left detail-arrow"></i>
+            </div>
+        </div>
+
+
+        <!-- ================= NEW: EXERCISE FLOW (Maintaining Motivation) ================= -->
+
+        <!-- VIEW 1: Intro (Overview) -->
+        <div id="ex-mm-intro" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-arrow-right wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title" style="font-size:1.2rem;">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+            
+            <h3 style="margin-top:30px;">نمای کلی تمرین</h3>
+            <p style="color:#555; line-height:1.8; font-size:1rem;">
+                شروع یک رفتار جدید و ارتقا دهنده زندگی بسیار آسان‌تر از ادامه دادن آن است. این تمرین به شما کمک می‌کند تا استراتژی‌های مفیدی برای حفظ تغییر رفتار ایجاد کنید.
+            </p>
+
+            <h3 style="margin-top:30px;">سوابق قبلی</h3>
+            <div style="text-align:center; margin-top:50px;">
+                <div style="font-size:4rem; color:#ddd; margin-bottom:15px;">
+                    <i class="fa-regular fa-face-smile"></i>
+                </div>
+                <p style="color:#999; font-weight:bold;">ثبتی وجود ندارد</p>
+            </div>
+
+            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px;">
+                <button class="start-btn" onclick="navigateTo('ex-mm-step1')">شروع</button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: Step 1 (The Seven Rs) -->
+        <div id="ex-mm-step1" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle active">1</div>
+                    <div class="step-circle">2</div>
+                    <div class="step-circle">3</div>
+                    <div class="step-circle">4</div>
+                    <div class="step-circle">5</div>
+                    <div class="step-circle">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <p style="color:#444; line-height:1.6; margin-bottom:20px;">
+                    صدها، اگر نگوییم هزاران ابزار برای کمک به حفظ یک رفتار جدید وجود دارد، اما تقریباً می‌توانیم همه آن‌ها را در «هفت R» دسته‌بندی کنیم:
+                </p>
+                <ul style="list-style:none; padding:0; margin-bottom:30px;">
+                    <li class="r-list-item">Reminders (یادآورها)</li>
+                    <li class="r-list-item">Records (ثبت سوابق)</li>
+                    <li class="r-list-item">Rewards (پاداش‌ها)</li>
+                    <li class="r-list-item">Routines (روال‌ها)</li>
+                    <li class="r-list-item">Relationships (روابط)</li>
+                    <li class="r-list-item">Reflecting (بازاندیشی)</li>
+                    <li class="r-list-item">Restructuring (بازآرایی)</li>
+                </ul>
+
+                <span class="wiz-question">چه رفتار جدیدی را می‌خواهید حفظ کنید؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer" style="justify-content: flex-end;">
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step2')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: Step 2 (Reminders) -->
+        <div id="ex-mm-step2" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle active">2</div>
+                    <div class="step-circle">3</div>
+                    <div class="step-circle">4</div>
+                    <div class="step-circle">5</div>
+                    <div class="step-circle">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">یادآورها (Reminders)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    می‌توانید انواع یادآورهای ساده را ایجاد کنید تا به شما کمک کنند انجام رفتار جدید را به خاطر بسپارید.
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    مثلاً، می‌توانید یک یادآور یا محافظ صفحه روی گوشی یا کامپیوتر خود با یک کلمه یا نماد مهم بسازید که شما را به اقدام آگاهانه دعوت کند.
+                </p>
+
+                <span class="wiz-question">چه یادآورهایی تنظیم می‌کنید؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                 <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step1')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step3')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: Step 3 (Records) -->
+        <div id="ex-mm-step3" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle active">3</div>
+                    <div class="step-circle">4</div>
+                    <div class="step-circle">5</div>
+                    <div class="step-circle">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">ثبت سوابق (Records)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    می‌توانید سوابق رفتار خود را در طول روز ثبت کنید؛ یادداشت کنید کی و کجا رفتار جدید را انجام می‌دهید و فواید آن چیست.
+                </p>
+
+                <span class="wiz-question">چگونه رفتار خود را ثبت می‌کنید؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step2')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step4')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: Step 4 (Rewards) -->
+        <div id="ex-mm-step4" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+            
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle checked">3</div>
+                    <div class="step-circle active">4</div>
+                    <div class="step-circle">5</div>
+                    <div class="step-circle">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">پاداش‌ها (Rewards)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    وقتی رفتار جدیدی انجام می‌دهید که شامل عمل آگاهانه بر اساس ارزش‌هایتان است، امیدواریم خود آن عمل حس پاداش‌دهنده‌ای داشته باشد. با این حال، می‌توانید با پاداش‌های اضافی رفتار جدید را تقویت کنید.
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    یک راه این است که موفقیت و پیشرفت خود را با کسی که به او نزدیک هستید و بازخورد مثبت می‌دهد به اشتراک بگذارید.
+                </p>
+                 <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:25px;">
+                    همچنین، اگر پاداش‌های مادی را ترجیح می‌دهید، اگر توانستید رفتار جدید را برای یک هفته کامل حفظ کنید، می‌توانید یک هدیه کوچک برای خود بخرید.
+                </p>
+
+                <span class="wiz-question">چگونه به خود پاداش می‌دهید؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step3')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step5')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 6: Step 5 (Routines) -->
+        <div id="ex-mm-step5" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle checked">3</div>
+                    <div class="step-circle checked">4</div>
+                    <div class="step-circle active">5</div>
+                    <div class="step-circle">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">روال‌ها (Routines)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    اگر هر صبح در ساعت مشخصی بیدار شوید تا مدیتیشن یا ورزش کنید یا دوش بگیرید، با گذشت زمان آن روال منظم تبدیل به عادت می‌شود. دیگر لازم نیست خیلی سخت به انجام آن فکر کنید و به «اراده» کمتری نیاز خواهید داشت.
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:25px;">
+                    ببینید آیا می‌توانید راهی پیدا کنید تا یک روال منظم یا آیینی پیرامون رفتار جدید خود بسازید، تا کم‌کم بخشی از سبک زندگی شما شود.
+                </p>
+
+                <span class="wiz-question">چه روال‌هایی ایجاد خواهید کرد؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step4')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step6')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 7: Step 6 (Relationships) -->
+        <div id="ex-mm-step6" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle checked">3</div>
+                    <div class="step-circle checked">4</div>
+                    <div class="step-circle checked">5</div>
+                    <div class="step-circle active">6</div>
+                    <div class="step-circle">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">روابط (Relationships)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    مطالعه کردن آسان‌تر است اگر یک «یار مطالعه» داشته باشید و ورزش کردن آسان‌تر است اگر یک «یار باشگاه» داشته باشید. آیا می‌توانید فردی مهربان، دلسوز و مشوق پیدا کنید که بتواند در رفتار جدیدتان از شما حمایت کند؟
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:25px;">
+                    شاید بتوانید سوابقی که ثبت کرده‌اید را برای پشتیبان خود ایمیل کنید، یا از آن‌ها بخواهید در زمان‌هایی که ممکن است فراموش کنید، انجام رفتار جدید را به شما یادآوری کنند.
+                </p>
+
+                <span class="wiz-question">چه روابطی می‌تواند از رفتار جدید شما حمایت کند؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step5')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step7')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 8: Step 7 (Reflecting) -->
+        <div id="ex-mm-step7" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle checked">3</div>
+                    <div class="step-circle checked">4</div>
+                    <div class="step-circle checked">5</div>
+                    <div class="step-circle checked">6</div>
+                    <div class="step-circle active">7</div>
+                    <div class="step-circle">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">بازاندیشی (Reflecting)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    مهم است که به‌طور منظم درباره نحوه رفتار خود و تأثیر آن بر زندگی‌تان بازاندیشی کنید. می‌توانید این کار را با نوشتن، صحبت با شخص دیگر، یا فقط به عنوان یک تمرین ذهنی در طول روز انجام دهید.
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:25px;">
+                    مطمئن شوید که متوجه می‌شوید چه چیزهایی باعث بازگشت به عادات قدیمی یا عقب‌گرد می‌شوند، و دقت کنید که این کار چه هزینه‌هایی از نظر چیزهایی که برایتان مهم هستند، دارد.
+                </p>
+
+                <span class="wiz-question">چگونه درباره رفتار خود بازاندیشی خواهید کرد؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step6')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" onclick="navigateTo('ex-mm-step8')">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 9: Step 8 (Restructuring) -->
+        <div id="ex-mm-step8" class="page">
+            <div class="wiz-header">
+                <i class="fa-solid fa-xmark wiz-close" onclick="navigateTo('do-what-matters-list')"></i>
+                <span class="wiz-title">حفظ انگیزه</span>
+                <div style="width:24px;"></div>
+            </div>
+
+            <div class="wiz-stepper-container">
+                <div class="wiz-stepper">
+                    <div class="step-circle checked">1</div>
+                    <div class="step-circle checked">2</div>
+                    <div class="step-circle checked">3</div>
+                    <div class="step-circle checked">4</div>
+                    <div class="step-circle checked">5</div>
+                    <div class="step-circle checked">6</div>
+                    <div class="step-circle checked">7</div>
+                    <div class="step-circle active">8</div>
+                </div>
+            </div>
+
+            <div class="wiz-content">
+                <h3 style="color:var(--primary);">بازآرایی (Restructuring)</h3>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:15px;">
+                    اغلب می‌توانید محیط خود را بازآرایی کنید تا رفتار جدیدتان آسان‌تر شود و در نتیجه احتمال حفظ آن بیشتر گردد.
+                </p>
+                <p style="color:#444; line-height:1.6; font-size:0.9rem; margin-bottom:25px;">
+                    برای مثال، اگر رفتار جدید «تغذیه سالم» است، می‌توانید آشپزخانه خود را طوری بازآرایی کنید که این کار آسان‌تر شود – هله‌هوله‌ها را دور بریزید و یخچال و کمد را با غذاهای سالم پر کنید.
+                </p>
+
+                <span class="wiz-question">چه بازآرایی‌هایی انجام خواهید داد؟</span>
+                <p style="font-size:0.8rem; color:#888; margin-bottom:10px;">پاسخ خود را اضافه کنید</p>
+                <textarea class="wiz-textarea" rows="3"></textarea>
+                <span class="char-count">0 / 200</span>
+            </div>
+
+            <div class="wiz-footer">
+                <div class="wiz-btn-circle btn-prev" onclick="navigateTo('ex-mm-step7')">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div class="wiz-btn-circle btn-next" style="background:#4CAF50; color:white;" onclick="navigateTo('do-what-matters-list')">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 3: TOOLS ================= -->
+        <div id="tools" class="page">
+            <h2>جعبه ابزار سلامت</h2>
+            <p style="margin-bottom:20px; font-size:0.9rem; color:#666;">ابزارهای کاربردی برای لحظات حساس:</p>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <span class="tool-icon" style="color: #4FC3F7;">🌬️</span><strong>تنفس دیافراگمی</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">۳ دقیقه آرام‌سازی</p>
+                </div>
+                <div class="tool-card">
+                    <span class="tool-icon" style="color: #FFB74D;">🎭</span><strong>کشف احساس</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">الان چه حسی داری؟</p>
+                </div>
+                <div class="tool-card" onclick="navigateTo('notifications')">
+                    <span class="tool-icon" style="color: #81C784;">🔔</span><strong>تنظیمات اعلان</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">لحظه‌های آگاهی</p>
+                </div>
+                <div class="tool-card" style="border-color: var(--accent);">
+                    <span class="tool-icon" style="color: var(--accent);">🆘</span><strong style="color: var(--accent);">SOS شفقت</strong><p style="font-size:0.7rem; color:#999; margin-top:5px;">کمک در بحران</p>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top:20px;">
+                <h3>یادداشت روزانه</h3>
+                <textarea style="width:100%; border:1px solid #eee; border-radius:8px; padding:10px; font-family:inherit;" rows="4" placeholder="امروز چه چیزی ذهنت رو مشغول کرده؟..."></textarea>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 4: PROFILE ================= -->
+        <div id="profile" class="page">
+            <div style="text-align:center; margin-bottom:30px;">
+                <div style="width:80px; height:80px; background:#ddd; border-radius:50%; margin:0 auto 10px; overflow:hidden;">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nima" alt="avatar" width="100%">
+                </div>
+                <h3 style="margin:0;">نیما ماجدارا</h3>
+                <span style="font-size:0.8rem; color:#888;">nima@example.com</span>
+            </div>
+            <div class="card">
+                <ul class="menu-list">
+                    <li class="menu-item"><i class="fa-regular fa-user"></i> ویرایش پروفایل</li>
+                    <li class="menu-item"><i class="fa-solid fa-shield-halved"></i> تغییر رمز عبور</li>
+                    <li class="menu-item"><i class="fa-solid fa-database"></i> پشتیبان‌گیری داده‌ها</li>
+                    <li class="menu-item" style="color:var(--accent);"><i class="fa-solid fa-crown"></i> اشتراک ویژه (فعال)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <ul class="menu-list">
+                    <li class="menu-item"><i class="fa-solid fa-circle-info"></i> درباره ما</li>
+                    <li class="menu-item"><i class="fa-solid fa-arrow-right-from-bracket" style="color:red;"></i> خروج</li>
+                </ul>
+            </div>
+        </div>
+
+
+         <!-- ================= PAGE 5: NOTIFICATIONS ================= -->
+         <div id="notifications" class="page">
+            <div class="sub-header" onclick="navigateTo('tools')">
+                <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>بازگشت به ابزارها
+            </div>
+            <h2 style="margin-bottom: 20px;">تنظیمات یادآوری‌ها</h2>
+            <div class="card">
+                <h3>لحظات هوشیار</h3>
+                <p style="font-size:0.8rem; color:#666; margin-bottom:20px;">دریافت پیام‌های کوتاه برای تمرین ذهن‌آگاهی.</p>
+                <div class="toggle-row"><span>فعال‌سازی</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">تعداد در روز</span><span style="font-weight:bold;">5 بار</span></div>
+                <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">شروع</span><span style="font-weight:bold;">09:00 صبح</span></div>
+                <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">پایان</span><span style="font-weight:bold;">10:00 شب</span></div>
+            </div>
+            <div class="card">
+                <h3>یادآور پایش هفتگی</h3>
+                <p style="font-size:0.8rem; color:#666; margin-bottom:20px;">ثبت حال و هوای کلی هفته.</p>
+                <div class="toggle-row"><span>فعال‌سازی</span><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+                <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">روز</span><span style="font-weight:bold;">پنج‌شنبه‌ها</span></div>
+                <div class="toggle-row"><span style="color:#888; font-size:0.9rem;">ساعت</span><span style="font-weight:bold;">18:00</span></div>
+            </div>
+            <button style="width:100%; background:var(--primary); color:white; padding:15px; border:none; border-radius:12px; font-size:1rem;">ذخیره تغییرات</button>
+        </div>
+
+    </div>
+    <!-- پایان ناحیه محتوا -->
+
+    <!-- نویگیشن پایین -->
+    <div class="bottom-nav" id="bottom-nav-bar">
+        <div class="nav-item active" id="btn-home" onclick="navigateTo('home')">
+            <i class="fa-solid fa-house"></i><span>خانه</span>
+        </div>
+        <div class="nav-item" id="btn-exercises" onclick="navigateTo('exercises')">
+            <i class="fa-solid fa-dumbbell"></i><span>تمرین‌ها</span>
+        </div>
+        <div class="nav-item" id="btn-tools" onclick="navigateTo('tools')">
+            <i class="fa-solid fa-briefcase-medical"></i><span>ابزارها</span>
+        </div>
+        <div class="nav-item" id="btn-profile" onclick="navigateTo('profile')">
+            <i class="fa-solid fa-user"></i><span>پروفایل</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function navigateTo(pageId) {
+        // 1. مخفی کردن همه صفحات
+        const allPages = document.querySelectorAll('.page');
+        allPages.forEach(page => {
+            page.classList.remove('active');
+            page.style.display = 'none';
+        });
+
+        // 2. نمایش صفحه هدف
+        const targetPage = document.getElementById(pageId);
+        if(targetPage) {
+            targetPage.style.display = 'block';
+            setTimeout(() => {
+                targetPage.classList.add('active');
+            }, 10);
+        }
+
+        // 3. مدیریت نمایش/مخفی کردن هدر و نویگیشن بار اصلی
+        const isWizardPage = pageId.startsWith('ex-mm-');
+        const mainHeader = document.getElementById('main-header');
+        const bottomNavBar = document.getElementById('bottom-nav-bar');
+
+        if (isWizardPage) {
+            if(mainHeader) mainHeader.style.display = 'none';
+            if(bottomNavBar) bottomNavBar.style.display = 'none';
+            document.querySelector('.content-area').style.marginTop = '20px';
+        } else {
+            if(mainHeader) mainHeader.style.display = 'flex';
+            if(bottomNavBar) bottomNavBar.style.display = 'flex';
+            document.querySelector('.content-area').style.marginTop = '70px';
+        }
+
+        // 4. مدیریت اکتیو بودن دکمه‌های پایین
+        if (!isWizardPage) {
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            if (pageId === 'home') {
+                document.getElementById('btn-home').classList.add('active');
+            } 
+            else if (pageId === 'exercises' || pageId === 'be-present-list' || pageId === 'open-up-list' || pageId === 'do-what-matters-list') {
+                document.getElementById('btn-exercises').classList.add('active');
+            } 
+            else if (pageId === 'tools' || pageId === 'notifications') {
+                document.getElementById('btn-tools').classList.add('active');
+            } 
+            else if (pageId === 'profile') {
+                document.getElementById('btn-profile').classList.add('active');
+            }
+        }
+        
+        // اسکرول به بالا
+        document.querySelector('.content-area').scrollTop = 0;
+    }
+</script>
+
+</b
+</html>

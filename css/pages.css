@@ -1,0 +1,95 @@
+/* css/pages.css */
+
+/* --- HOME STATS --- */
+.stats-row {
+    display: flex; justify-content: space-between; gap: 10px; margin-bottom: 25px;
+}
+.stat-item {
+    flex: 1; background: var(--card-bg); padding: 15px 10px;
+    border-radius: 16px; text-align: center; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.stat-icon { font-size: 1.2rem; color: var(--accent); margin-bottom: 5px; }
+.stat-val { font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+.stat-label { font-size: 0.7rem; color: #999; }
+
+/* --- JOURNAL INPUT --- */
+.journal-section { margin-top: 30px; }
+.journal-label { font-size: 0.9rem; font-weight: bold; color: var(--primary); margin-bottom: 5px; }
+.journal-line-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 1rem;
+    color: var(--text);
+    transition: 0.3s;
+    border-radius: 0;
+}
+.journal-line-input:focus { outline: none; border-bottom: 2px solid var(--primary); }
+
+/* --- SUB PAGES HEADERS --- */
+.sub-header {
+    display: flex; align-items: center; color: var(--primary);
+    font-weight: bold; font-size: 0.9rem; margin-bottom: 15px; cursor: pointer;
+}
+
+/* --- WIZARD (STEPS) --- */
+.wiz-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+}
+.wiz-close { font-size: 1.5rem; color: var(--text-light); cursor: pointer; }
+.wiz-title { font-weight: bold; color: var(--primary); }
+
+.wiz-desc { color: #555; line-height: 1.8; font-size: 1rem; }
+
+.bottom-btn-container { position: absolute; bottom: 20px; left: 20px; right: 20px; }
+.start-btn {
+    background: var(--dark-btn); color: white; width: 100%; padding: 18px;
+    border-radius: 30px; border: none; font-size: 1.1rem; font-weight: bold;
+    cursor: pointer; box-shadow: 0 5px 15px rgba(15, 76, 129, 0.3);
+}
+
+.wiz-content { margin-top: 30px; }
+.wiz-question { font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 10px; }
+.wiz-sub { font-size: 0.85rem; color: #888; margin-bottom: 15px; }
+.wiz-textarea {
+    width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 15px;
+    background: white; font-size: 1rem; resize: none; margin-bottom: 5px;
+}
+.wiz-textarea:focus { outline: none; border-color: var(--primary); }
+.char-count { font-size: 0.75rem; color: #bbb; display: block; text-align: left; }
+
+.wiz-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 2000;
+    max-width: 380px; margin: 0 auto; pointer-events: none;
+}
+.wiz-btn-circle {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; pointer-events: auto;
+}
+.btn-next { background: var(--yellow-btn); color: var(--text); }
+.btn-prev { background: #E3F2FD; color: var(--primary); margin-right: auto; }
+.btn-prev.inactive { opacity: 0.5; pointer-events: none; }
+.btn-finish { background: #4CAF50; color: white; }
+
+.wiz-checkbox {
+    display: flex; align-items: center; gap: 10px;
+    padding: 15px; background: white; border-radius: 12px; margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+.r-list-item { margin-bottom: 8px; font-weight: 500; color: var(--primary); }
+
+/* --- PROFILE --- */
+.profile-header { text-align: center; margin-bottom: 30px; }
+.avatar-container {
+    width: 80px; height: 80px; background: #ddd; border-radius: 50%;
+    margin: 0 auto 10px; overflow: hidden;
+}
+.avatar-container img { width: 100%; }
+.profile-header h3 { margin: 0; }
+.profile-header span { font-size: 0.8rem; color: #888; }

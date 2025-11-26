@@ -1,0 +1,63 @@
+/* css/layout.css */
+
+/* --- HEADER --- */
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+}
+
+.logo-box { display: flex; align-items: center; gap: 12px; }
+
+/* Helm Animation */
+.helm-icon {
+    width: 40px; height: 40px;
+    border: 3px solid var(--primary); border-radius: 50%;
+    position: relative; display: flex; justify-content: center; align-items: center;
+    animation: spinIntro 1.5s ease-out;
+}
+@keyframes spinIntro { from { transform: rotate(-180deg); opacity: 0; } to { transform: rotate(0); opacity: 1; } }
+
+.helm-spoke { position: absolute; background: var(--primary); border-radius: 2px; }
+.s1 { width: 100%; height: 3px; } .s2 { width: 3px; height: 100%; }
+.s3 { width: 70%; height: 3px; transform: rotate(45deg); } .s4 { width: 70%; height: 3px; transform: rotate(-45deg); }
+.helm-center {
+    width: 10px; height: 10px; background: var(--card-bg);
+    border: 2px solid var(--primary); border-radius: 50%;
+    position: absolute; z-index: 2;
+}
+.logo-text { font-weight: 900; font-size: 1.3rem; color: var(--primary); letter-spacing: -0.5px; }
+
+.notification-bell { position: relative; font-size: 1.2rem; color: var(--text-light); cursor: pointer; }
+.badge { position: absolute; top: -3px; right: -3px; background: var(--accent); width: 9px; height: 9px; border-radius: 50%; }
+
+/* --- BOTTOM NAV --- */
+.bottom-nav {
+    height: 75px;
+    background: var(--card-bg);
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 0; width: 100%;
+    z-index: 1000;
+    padding-bottom: 10px;
+}
+
+.nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    color: #95a5a6; font-size: 0.8rem; transition: 0.3s; cursor: pointer;
+}
+.nav-item i { font-size: 1.3rem; transition: 0.3s; }
+.nav-item.active { color: var(--primary); font-weight: bold; }
+.nav-item.active i { transform: translateY(-3px); }
